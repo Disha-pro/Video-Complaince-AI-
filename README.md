@@ -216,6 +216,87 @@ Content-Type: application/json
 This is an example of the **actual initial failure state** observed during development. A successful response will be documented after the complete pipeline is verified.
 
 ---
+## ☁️ Azure Cloud Infrastructure
+
+The project uses Microsoft Azure services to support video processing, AI-powered analysis, knowledge retrieval, data storage, and application monitoring.
+
+### Azure Resources
+
+| Azure Service | Responsibility |
+|---|---|
+| Azure AI Video Indexer | Video insights, transcript and OCR extraction |
+| Azure AI Foundry | AI model and project environment |
+| Azure OpenAI | LLM-powered compliance reasoning |
+| Azure AI Search | Compliance knowledge indexing and retrieval |
+| Azure Blob Storage | Cloud object storage |
+| Application Insights | Application telemetry and performance monitoring |
+| Log Analytics Workspace | Centralized logs and diagnostics |
+
+### Cloud Architecture
+
+```mermaid
+flowchart TB
+    U(["🎬 YouTube Video"])
+    API["⚡ FastAPI Backend"]
+    LG["🔗 LangGraph Workflow"]
+
+    subgraph AZURE["☁️ Microsoft Azure"]
+        VI["🎞️ Azure AI Video Indexer"]
+        BLOB[("🗄️ Azure Blob Storage")]
+        FOUNDRY["🤖 Azure AI Foundry / Azure OpenAI"]
+        SEARCH[("🔎 Azure AI Search")]
+        APP["📊 Application Insights"]
+        LOG["📋 Log Analytics"]
+    end
+
+    U --> API
+    API --> LG
+    LG --> VI
+    VI --> BLOB
+    VI --> LG
+    LG --> SEARCH
+    SEARCH --> FOUNDRY
+    FOUNDRY --> LG
+    LG --> RESULT(["📄 Compliance Report"])
+
+    API -. telemetry .-> APP
+    LG -. telemetry .-> APP
+    APP -. diagnostics .-> LOG
+
+    classDef input fill:#dbeafe,stroke:#2563eb,color:#172554
+    classDef app fill:#ede9fe,stroke:#7c3aed,color:#312e81
+    classDef azure fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e
+    classDef data fill:#dcfce7,stroke:#16a34a,color:#14532d
+    classDef output fill:#fce7f3,stroke:#db2777,color:#831843
+
+    class U input
+    class API,LG app
+    class VI,FOUNDRY,APP azure
+    class BLOB,SEARCH,LOG data
+    class RESULT output
+```
+
+*The diagram represents the intended service architecture. Actual data flow and production integration are subject to end-to-end verification.*
+
+### Infrastructure Provisioning Status
+
+- [x] Azure resource group created
+- [x] Azure Storage Account provisioned
+- [x] Azure AI Foundry resource provisioned
+- [x] Azure AI Search service provisioned
+- [x] Azure AI Video Indexer resource provisioned
+- [x] Application Insights provisioned
+- [x] Log Analytics Workspace available
+- [x] Azure ARM authentication tested
+- [ ] Verify complete Video Indexer account-token and upload integration
+- [ ] Verify end-to-end cloud processing
+- [ ] Deploy and validate the application in Azure
+
+### Observability
+
+Application Insights is configured for application telemetry, while Log Analytics provides a workspace for centralized diagnostics.
+
+The objective is to make application behavior, processing failures, and performance easier to investigate during production deployment.
 
 ## 🖥️ 6. Running the Project Locally
 
