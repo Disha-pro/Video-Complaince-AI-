@@ -3,77 +3,197 @@ AI-powered video compliance auditing system using Python, FastAPI, LangGraph, Az
 
 # 🎥 Video Compliance AI
 
-### AI-Powered Video Compliance & Brand Safety Auditing
+<p align="center">
+  <strong>AI-Powered Video Compliance & Brand Safety Auditing</strong>
+</p>
 
-An AI-powered video analysis system designed to audit YouTube video content against brand compliance and safety guidelines.
+<p align="center">
+  Analyze video content, extract insights, retrieve compliance guidelines, and identify potential brand safety risks using AI.
+</p>
 
-The project combines video intelligence, workflow orchestration, and LLM-based reasoning to build a pipeline for extracting video information and identifying potential compliance risks.
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
+  <img src="https://img.shields.io/badge/LangGraph-Workflow-1C3C3C?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Azure-Cloud-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white" />
+  <img src="https://img.shields.io/badge/LLM-AI%20Analysis-8A2BE2?style=for-the-badge" />
+</p>
 
-> **Project status:** Active development. FastAPI server and API endpoints are operational. End-to-end video processing and transcript extraction are currently being debugged.
+<p align="center">
+  <img src="https://img.shields.io/badge/Project-Active%20Development-orange?style=flat-square" />
+  <img src="https://img.shields.io/badge/API-FastAPI%20Operational-success?style=flat-square" />
+  <img src="https://img.shields.io/badge/End--to--End-Audit%20Testing-yellow?style=flat-square" />
+</p>
 
 ---
 
-## 🎯 Project Objective
+## 🌟 1. What is Video Compliance AI?
 
-Build an automated system that can:
+**Video Compliance AI** is an AI engineering project designed to automate the analysis of video content against brand safety and compliance guidelines.
 
-- Accept a YouTube video URL.
-- Extract video content and metadata.
-- Process video content using Azure Video Indexer.
-- Extract transcripts and OCR information.
-- Analyze content against compliance guidelines.
-- Identify potential brand safety and policy risks.
-- Return structured compliance results.
+Instead of manually reviewing every video, the system aims to create an automated pipeline that:
 
-## 🏗️ Architecture
+- Accepts a YouTube video URL.
+- Downloads and processes video content.
+- Extracts transcripts and on-screen text.
+- Retrieves relevant compliance guidelines.
+- Uses LLM-based reasoning to analyze content.
+- Identifies potential compliance risks.
+- Generates a structured audit report.
+
+### 🎯 The problem we are solving
+
+Brands, agencies, and marketing teams publish large volumes of video content. Manually checking every video for policy violations, inappropriate claims, or brand safety concerns can be time-consuming.
+
+This project explores how **video intelligence + retrieval + LLM reasoning + workflow orchestration** can help automate that review process.
+
+---
+
+## 🧠 2. Technology Stack
+
+### Core engineering stack
+
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=python,fastapi,azure,git,github,vscode" />
+</p>
+
+| Technology | Role in this project |
+|---|---|
+| 🐍 Python 3.12 | Core programming language |
+| ⚡ FastAPI | REST API and backend services |
+| 🔗 LangGraph | Orchestrates the multi-step audit workflow |
+| ☁️ Azure Video Indexer | Video insights and transcript extraction |
+| 🤖 Azure OpenAI | LLM-powered compliance analysis |
+| 🔎 Azure AI Search | Retrieval of compliance knowledge |
+| 📥 yt-dlp | YouTube video download integration |
+| 📖 Swagger UI | API documentation and testing |
+| 📦 uv | Python dependency and environment management |
+
+### AI and retrieval components
 
 ```text
-                  YouTube Video URL
-                         |
-                         v
-                   FastAPI Backend
-                         |
-                         v
-                   LangGraph Workflow
-                         |
-              +----------+----------+
-              |                     |
-              v                     v
-         Video Indexer          Audit Engine
-         (Azure)                (LLM-based)
-              |                     |
-              v                     v
-       Transcript & OCR       Compliance Analysis
-              |                     |
-              +----------+----------+
-                         |
-                         v
-                 Structured JSON
-                  Audit Report
+Video Content
+     |
+     v
+Transcript + OCR Extraction
+     |
+     v
+Compliance Knowledge Retrieval
+     |
+     v
+LLM-Based Reasoning
+     |
+     v
+Structured Compliance Findings
 ```
 
-## 🛠️ Technology Stack
+---
 
-| Technology | Purpose |
+## 🏗️ 3. System Architecture
+
+The application is designed around a modular workflow, with FastAPI accepting requests and LangGraph coordinating the processing and auditing stages.
+
+```mermaid
+flowchart TD
+    A(["🎬 YouTube Video URL"]) --> B["⚡ FastAPI Backend"]
+    B --> C["🆔 Generate Session ID"]
+    C --> D["🔗 LangGraph Workflow"]
+
+    D --> E["📥 Video Download<br/>yt-dlp"]
+    E --> F["☁️ Azure Video Indexer"]
+
+    F --> G["📝 Transcript Extraction"]
+    F --> H["🔎 OCR / On-screen Text"]
+
+    G --> I["🧠 Compliance Audit"]
+    H --> I
+
+    J[("📚 Azure AI Search<br/>Compliance Knowledge")] --> I
+    K["🤖 Azure OpenAI<br/>LLM Reasoning"] --> I
+
+    I --> L["📊 Compliance Evaluation"]
+    L --> M["📄 Structured JSON Report"]
+
+    M --> N(["✅ PASS / ❌ FAIL"])
+
+    classDef input fill:#dbeafe,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef backend fill:#ede9fe,stroke:#7c3aed,color:#312e81,stroke-width:2px
+    classDef processing fill:#ffedd5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef ai fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
+    classDef output fill:#fce7f3,stroke:#db2777,color:#831843,stroke-width:2px
+
+    class A input
+    class B,C,D backend
+    class E,F,G,H processing
+    class I,J,K,L ai
+    class M,N output
+```
+
+### 🔍 Architecture explained in simple terms
+
+| Stage | What happens? |
 |---|---|
-| Python 3.12 | Backend development |
-| FastAPI | REST API |
-| LangGraph | Workflow orchestration |
-| Azure Video Indexer | Video intelligence and transcription |
-| Azure OpenAI | LLM-based analysis |
-| Azure AI Search | Compliance knowledge retrieval |
-| yt-dlp | YouTube video downloading |
-| Swagger UI | API testing |
+| 1. Input | User submits a YouTube video URL |
+| 2. API | FastAPI receives the request |
+| 3. Workflow | LangGraph coordinates processing |
+| 4. Video intelligence | Azure Video Indexer processes the video |
+| 5. Extraction | Transcript and OCR information are collected |
+| 6. Retrieval | Relevant compliance knowledge is retrieved |
+| 7. AI analysis | LLM evaluates content against guidelines |
+| 8. Output | Structured compliance results are returned |
 
-## ⚙️ Current API Endpoints
+---
+
+## 🔄 4. LangGraph Workflow
+
+The workflow separates video processing from compliance analysis.
+
+```mermaid
+flowchart TD
+    START(["START"]) --> A["Indexer Node"]
+    A --> B{"Transcript available?"}
+
+    B -->|Yes| C["Auditor Node"]
+    B -->|No| D["Return Processing Failure"]
+
+    C --> E["Generate Compliance Report"]
+    D --> F(["END"])
+    E --> F
+
+    classDef start fill:#dbeafe,stroke:#2563eb,color:#172554
+    classDef node fill:#ede9fe,stroke:#7c3aed,color:#312e81
+    classDef decision fill:#fef3c7,stroke:#d97706,color:#78350f
+    classDef error fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    classDef success fill:#dcfce7,stroke:#16a34a,color:#14532d
+
+    class START,F start
+    class A,C,E node
+    class B decision
+    class D error
+```
+
+**Why LangGraph?**
+
+It provides explicit workflow orchestration, state management, and separation of processing and auditing responsibilities.
+
+---
+
+## 📡 5. API Documentation
+
+The backend exposes REST API endpoints through FastAPI.
 
 | Method | Endpoint | Purpose |
 |---|---|---|
-| GET | `/health` | Health check |
+| GET | `/health` | Check API health |
 | POST | `/audit` | Submit a video for auditing |
-| GET | `/docs` | Interactive API documentation |
+| GET | `/docs` | Interactive Swagger documentation |
 
-### Example Request
+### Example API request
+
+```http
+POST /audit
+Content-Type: application/json
+```
 
 ```json
 {
@@ -81,7 +201,7 @@ Build an automated system that can:
 }
 ```
 
-### Example Response Structure
+### Example response structure
 
 ```json
 {
@@ -93,88 +213,146 @@ Build an automated system that can:
 }
 ```
 
-The response above represents the initial test result, not a successful audit.
+This is an example of the **actual initial failure state** observed during development. A successful response will be documented after the complete pipeline is verified.
 
-## 🚀 Local Setup
+---
 
-### 1. Clone the repository
+## 🖥️ 6. Running the Project Locally
+
+### Prerequisites
+
+- Python 3.12
+- uv package manager
+- Azure service resources and credentials
+- Git
+
+### Step 1 — Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/video-compliance-ai.git
+git clone https://github.com/Disha-pro/video-compliance-ai.git
 cd video-compliance-ai
 ```
 
-### 2. Create the Python environment
-
-```bash
-uv venv --python 3.12
-```
-
-### 3. Install dependencies
+### Step 2 — Set up the environment
 
 ```bash
 uv sync --python 3.12
 ```
 
-### 4. Configure environment variables
+### Step 3 — Configure environment variables
 
-Create a `.env` file using `.env.example` as a template.
+Create a local `.env` file based on `.env.example`.
 
-Configure the required Azure services and credentials locally. Never commit your actual `.env` file.
+Configure the required Azure credentials and service endpoints.
 
-### 5. Start the API server
+**Important:** Never commit your real `.env` file or API keys.
+
+### Step 4 — Start FastAPI
+
+PowerShell:
 
 ```powershell
 $env:PYTHONPATH = "$PWD\backend"
+
 uv run --python 3.12 uvicorn backend.src.api.server:app --reload --app-dir backend
 ```
 
-### 6. Open API documentation
+### Step 5 — Open Swagger UI
 
 ```text
 http://127.0.0.1:8000/docs
 ```
 
-## 📊 Development Progress
+### Step 6 — Test the API
 
-- [x] Python 3.12 environment configured
-- [x] Dependencies installed
-- [x] FastAPI backend started
-- [x] Swagger API documentation available
-- [x] Health and audit endpoints operational
-- [x] Azure ARM authentication token acquired
-- [x] Azure AI Search indexing and retrieval tested
-- [ ] Complete Azure Video Indexer account-token integration
-- [ ] Complete video upload and transcript extraction
-- [ ] Verify end-to-end LangGraph execution
-- [ ] Generate and validate final compliance reports
-
-## 🔐 Security
-
-- Keep API keys and connection strings in environment variables.
-- Never commit `.env` files.
-- Use appropriate Azure access permissions.
-- Do not publish private credentials or customer video data.
-
-## 🔮 Planned Enhancements
-
-- Detailed compliance scoring.
-- Risk categorization and severity assessment.
-- Evidence-based violation reporting.
-- Video processing status tracking.
-- Production deployment and monitoring.
-- Interactive compliance dashboard.
+1. Expand `POST /audit`.
+2. Click **Try it out**.
+3. Enter a valid YouTube video URL.
+4. Click **Execute**.
+5. Inspect the response and terminal logs.
 
 ---
 
-## 👩‍💻 Author
+## 📈 7. Development Progress
+
+This project is being developed and tested incrementally.
+
+```mermaid
+flowchart LR
+    A["Environment Setup"] --> B["FastAPI Backend"]
+    B --> C["Swagger API"]
+    C --> D["Azure Authentication"]
+    D --> E["Video Processing"]
+    E --> F["Transcript Extraction"]
+    F --> G["Compliance Analysis"]
+    G --> H["Final Report"]
+
+    classDef done fill:#dcfce7,stroke:#16a34a,color:#14532d
+    classDef active fill:#fef3c7,stroke:#d97706,color:#78350f
+    classDef planned fill:#e5e7eb,stroke:#64748b,color:#1e293b
+
+    class A,B,C,D done
+    class E,F active
+    class G,H planned
+```
+
+| Component | Current status |
+|---|---|
+| Python environment | ✅ Configured |
+| Dependencies | ✅ Installed |
+| FastAPI server | ✅ Running |
+| Swagger documentation | ✅ Available |
+| API health endpoint | ✅ Operational |
+| Azure ARM token acquisition | ✅ Verified |
+| Azure AI Search indexing and retrieval | ✅ Tested |
+| Video Indexer account-token integration | 🔄 Under testing |
+| Complete transcript extraction | 🔄 Under testing |
+| End-to-end compliance audit | ⏳ Pending verification |
+
+---
+
+## 🚀 8. Planned Enhancements
+
+- [ ] Complete Azure Video Indexer integration.
+- [ ] Verify transcript and OCR extraction.
+- [ ] Complete end-to-end LangGraph execution.
+- [ ] Add compliance scoring and severity levels.
+- [ ] Add evidence-based violation reporting.
+- [ ] Build an interactive audit dashboard.
+- [ ] Add background processing and audit status tracking.
+- [ ] Deploy the application to Azure.
+- [ ] Add automated tests and production monitoring.
+
+---
+
+## 🔐 9. Security Considerations
+
+- Store credentials in environment variables.
+- Exclude `.env` from Git.
+- Apply least-privilege Azure permissions.
+- Avoid publishing confidential video content.
+- Validate incoming URLs and uploaded content.
+- Apply appropriate API authentication before production deployment.
+
+---
+
+## 👩‍💻 10. About the Developer
 
 **Disha Sonkar**
 
 AI Engineering | Generative AI | Agentic AI | Data Analytics
 
-GitHub: https://github.com/Disha-pro
+Building practical AI systems that combine backend engineering, retrieval-augmented generation, workflow orchestration, and LLM-based automation.
+
+<p align="center">
+  <a href="https://github.com/Disha-pro">
+    <img src="https://img.shields.io/badge/GitHub-Disha--pro-181717?style=for-the-badge&logo=github" />
+  </a>
+</p>
 
 ---
 
-*Built as an applied AI engineering project exploring video intelligence, workflow orchestration, and automated compliance analysis.*
+<p align="center">
+  <strong>Video Compliance AI</strong><br/>
+  From Video Intelligence to Automated Compliance Reasoning.
+</p>
